@@ -10,11 +10,16 @@ print(x)
 '''
 
 import csv
+from Globals import DataList
 
-with open('Org Diagnostic.csv', 'r') as file:
-    csv_reader = csv.reader(file)
-    for row in csv_reader:
-        print(row)   
-        print()
-        
+def readfile():
+
+    print("Reading from file")
+
+    with open('Org Diagnostic.csv', 'r') as file:
+        csv_reader = csv.reader(file)
+        for row in csv_reader:
+            for x in row:
+                DataList.append(x)
+
 
