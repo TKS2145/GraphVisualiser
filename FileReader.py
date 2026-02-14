@@ -16,10 +16,12 @@ def readfile():
 
     print("Reading from file")
 
+
+    templist = []
     with open('Org Diagnostic.csv', 'r') as file:
         csv_reader = csv.reader(file)
         for row in csv_reader:
             for x in row:
-                DataList.append(x)
-
+                templist.append(x)
+        DataList.append(templist)
 
