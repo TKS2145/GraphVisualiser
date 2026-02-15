@@ -1,49 +1,17 @@
 import matplotlib.pyplot as plt
 from Globals import DataList
-#import plotly.graph_objects as go
 from collections import Counter
+import numpy as np
 
-
-def plotgraph():
+def plotgraph(x = [], y = []):
 
     print("Processing graph")
 
-    TempList = list(DataList)
-    NewDataList = []
-
-
-    for x in TempList: #for each list of collected data
-        
-
-        for y in x:
-
-            try:
-                NewDataList.append(int(y)) #Checking if interger adn adding to list of number
-            except:
-                continue
-
-    print("New list of data is " , NewDataList)
-    i = 0
-    x =[]
-    y = []
-
-    for Data in NewDataList:
-        
-        if i % 2 == 0:
-            x.append(Data)
-        else:
-            y.append(Data)
-        
-        i+=1
-    '''
+    ''' 
     print()        
-    print("List od x coordinates is" , x)
+    print("List of x coordinates is" , x)
     print()
     print("List of y coordinates is" , y)
-
-    plt.scatter(x_coords, y_coords)
-    plt.show()
-
     '''
 
     # Count occurrences of each (x, y) pair
@@ -57,25 +25,31 @@ def plotgraph():
 
     # Plot scatter with varying sizes
     plt.scatter(x_coords, y_coords, s=sizes, alpha=0.6, c='blue')
-    plt.xlabel('X-axis')
-    plt.ylabel('Y-axis')
+    plt.xlabel('Importance')
+    plt.ylabel('Performance')
     plt.title('Importance V/S Performance Graph')
     plt.grid(True)
     plt.show()
 
 
-    #ALternate graph 
-'''
-    fig = go.Figure(data=[go.Scatter(
-    x, y,
-    marker=dict(
-        size=size,
-        sizemode='area',
-        sizeref=2.*max(size)/(40.**2),
-        sizemin=4
-    )
-    )])
+def radarplot(listlabel= []):
 
-    fig.show()
+    labels=np.array(listlabel)
+    markers = [0, 1, 2, 3, 4, 5]
+    str_markers = ["0", "1", "2", "3", "4", "5"]
 
-'''
+    # Calculate angles
+    N = len(labels)
+    angles = np.linspace(0, 2 * np.pi, N, endpoint=False)
+    values += values[:1]  # Close the loop
+    angles = np.concatenate([angles, [angles[0]]])
+
+    # Create the plot
+    fig, ax = plt.subplots(figsize=(6, 6), subplot_kw={'projection': 'polar'})
+    ax.plot(angles, values, linewidth=2, linestyle='solid', marker='o')
+    ax.fill(angles, values, alpha=0.25)
+    ax.set_xticks(angles[:-1])
+    ax.set_xticklabels(labels)
+    ax.set_rlabel_position(0)
+    plt.title("Radar Chart from List", pad=20)
+    plt.show()

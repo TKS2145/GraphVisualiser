@@ -1,14 +1,3 @@
-'''
-import pandas as pd
-
-data = pd.read_csv('Org Diagnostic.csv')
-
-x = data.to_dict()
-
-print(x)
-
-'''
-
 import csv
 from Globals import DataList
 
