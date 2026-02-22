@@ -1,7 +1,8 @@
-import matplotlib.pyplot as plt
-from Globals import DataList
-from collections import Counter
 import numpy as np
+import matplotlib.pyplot as plt
+from collections import Counter
+from math import pi
+
 
 def plotgraph(x = [], y = []):
 
@@ -32,24 +33,48 @@ def plotgraph(x = [], y = []):
     plt.show()
 
 
-def radarplot(listlabel= []):
+def radarplot(listlabel= [], values =[]):
 
-    labels=np.array(listlabel)
-    markers = [0, 1, 2, 3, 4, 5]
-    str_markers = ["0", "1", "2", "3", "4", "5"]
+    labels = np.array(listlabel)
 
     # Calculate angles
     N = len(labels)
-    angles = np.linspace(0, 2 * np.pi, N, endpoint=False)
-    values += values[:1]  # Close the loop
-    angles = np.concatenate([angles, [angles[0]]])
 
-    # Create the plot
-    fig, ax = plt.subplots(figsize=(6, 6), subplot_kw={'projection': 'polar'})
-    ax.plot(angles, values, linewidth=2, linestyle='solid', marker='o')
-    ax.fill(angles, values, alpha=0.25)
-    ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(labels)
-    ax.set_rlabel_position(0)
-    plt.title("Radar Chart from List", pad=20)
+    # Convert to angles (0 to 2π)
+    angles = [n / float(N) * 2 * pi for n in range(N)]
+    angles += angles[:1]  # Complete the circle
+
+    # Create polar subplot
+    fig, ax = plt.subplots(figsize=(N, N), subplot_kw=dict(polar=True))
+
+    # Add final data point to close the polygon
+    values += values[:1]
+
+    # Set the direction and offset
+    ax.set_theta_offset(np.pi / 2)  # Start at top
+    ax.set_theta_direction(-1)      # Clockwise
+
+    # Create plot
+    fig, ax = plt.subplots(figsize=(N, N), subplot_kw=dict(polar=True))
+
+
+    # Plot data
+    ax.plot(angles, values, 'o-', linewidth=3, label='Group A', color='blue')
+    ax.fill(angles, values, alpha=0.25, color='blue')
+    #ax.plot(angles, data2, 'o-', linewidth=3, label='Group B', color='red')
+    #ax.fill(angles, data2, alpha=0.25, color='red')
+
+    # Customize
+    ax.set_theta_offset(pi / 2)
+    ax.set_theta_direction(-1)
+    ax.set_thetagrids(np.degrees(angles[:-1]), labels)
+    ax.set_ylim(0, 5)
+    ax.set_title('Radar Chart Comparison\n(Group A vs Group B)', size=16, pad=1)
+    ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0))
+    ax.grid(True)
+   
+
+    # Show the plot
+    plt.tight_layout()
     plt.show()
+
