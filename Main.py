@@ -19,6 +19,7 @@ def main():
     gap_structure_and_process = ["Organizational design", "Job and work group design", "Operational alignment and integration", "Strategic alliances/ partnerships", "Developing new ventures", "Organizational governance", "Organizational communication"]
 
     GraphMaker.radarplot(gap_strategicDirection, gaps[0:7] )
+    GraphMaker.radarplot(gap_structure_and_process , gaps[7:14] )
 
 
 if __name__ == "__main__" :
